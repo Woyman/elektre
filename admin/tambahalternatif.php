@@ -3,7 +3,7 @@ include('../config/session.php');
 include('../config/function.php');
 include('../config/koneksi.php');
 
-// $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
+$qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
 
 ?>
 
@@ -37,36 +37,47 @@ include('../config/koneksi.php');
 
         <div class="row">
             <div class="col-8 offset-2">
-
+            <h4 class="pb-3">Masukkan alternatif baru.</h4>
+                <form action="proses/alternatif.php" method="post" enctype="multipart/form-data"> 
+                    <input type="hidden" name="action" value="input">
                     <div class="form-group">
                         <label for="merk">Merk</label>
-                        <input type="text" name="merk" class="form-control" id="merk">                                
+                        <select class="form-control" name="merk" Required> 
+                            <option value=""> --merk </option>
+                            <?php while($merk = mysqli_fetch_assoc($qGetDataMerk) ){ ?>
+                                <option value="<?php echo $merk['id_merk'] ?>"> <?php echo $merk['nama_merk'] ?> </option>
+                            <?php } ?>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="merk">Jenis Produk</label>
-                        <input type="text" name="merk" class="form-control" id="">                                
+                        <label for="jns_produk">Jenis Produk</label>
+                        <select class="form-control" name="jns_produk" id="jns_produk" Required> 
+                            <option value=""> --jenis produk </option>
+                            <option value="laptop"> Laptop</option>
+                            <option value="smartphone"> Smartphone</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="merk">Seri Produk</label>
-                        <input type="text" name="merk" class="form-control" id="">                                
+                        <label for="seri">Seri Produk</label>
+                        <input type="text" name="seri" class="form-control" id="seri" Required>                                
                     </div>
 
                     <div class="form-group">
-                        <label for="merk">Foto</label>
-                        <input type="file" name="#" class="form-control" >                                
+                        <label for="gambar">Foto</label>
+                        <input type="file" name="gambar" class="form-control" id="gambar" Required >                                
                     </div>
 
                     <div class="form-group">
                         <label for="merk">Deskripsi</label>
-                        <textarea class="form-control"></textarea
+                        <textarea class="form-control" name="deskripsi" rows="5" Required></textarea>
                     </div>
 
-
-
-
-
+                    <div class="form-group">
+                       <button class="btn btn-primary col-3">Input</button>
+                    </div>
+                </form>
             </div>                
         </div>
 

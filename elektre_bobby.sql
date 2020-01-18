@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 17 Jan 2020 pada 00.20
+-- Waktu pembuatan: 18 Jan 2020 pada 01.29
 -- Versi server: 5.7.26
 -- Versi PHP: 7.3.5
 
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `alternatif`;
 CREATE TABLE IF NOT EXISTS `alternatif` (
   `id_alternatif` int(10) NOT NULL AUTO_INCREMENT,
   `id_merk` int(10) NOT NULL,
-  `jns_produk` enum('laptop','smarthphone') NOT NULL,
+  `jns_produk` enum('laptop','smartphone') NOT NULL,
   `seri_produk` varchar(255) NOT NULL,
   `foto` varchar(255) NOT NULL,
   `deskripsi` text NOT NULL,

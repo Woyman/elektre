@@ -3,7 +3,13 @@ include('../config/session.php');
 include('../config/function.php');
 include('../config/koneksi.php');
 
-// $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
+$qGetDataAlternatifLeptop = mysqli_query($konek, "SELECT * FROM alternatif 
+                                            LEFT JOIN merk ON alternatif.id_merk = merk.id_merk
+                                            WHERE jns_produk='laptop' ");
+
+$qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif 
+                                            LEFT JOIN merk ON alternatif.id_merk = merk.id_merk
+                                            WHERE jns_produk='smartphone' ");
 
 ?>
 
@@ -42,6 +48,15 @@ include('../config/koneksi.php');
             </div>
         </div>
 
+        <?php  if( isset($_GET['success']) && $_GET['success'] == '1' )
+            { ?>
+                
+                <div class="alert alert-success animated fadeOut delay-4s" role="alert">
+                    Data berhasil ditambahkan.
+                </div>
+
+        <?php }elseif(isset($_GET['success']) && $_GET['success'] == '2'){ }?>
+
         <ul class="nav nav-tabs nav-fill col-12" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#laptop" role="tab" aria-controls="home" aria-selected="true">Laptop</a>
@@ -50,33 +65,69 @@ include('../config/koneksi.php');
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#smartphone" role="tab" aria-controls="profile" aria-selected="false">Smartphone</a>
             </li>           
         </ul>
-        <div class="tab-content col-8" id="myTabContent">
+        <div class="tab-content col-12" id="myTabContent">
             <div class="tab-pane fade show active" id="laptop" role="tabpanel" aria-labelledby="home-tab">
             
-                <table class="table">
+                <table class="table mt-3">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Merk</th>  
                             <th scope="col">Jenis Produk</th>
                             <th scope="col">Seri Produk</th>
+                            <th> Action </th>
                         </tr>
                     </thead>
                     <tbody>
 
-
+                    <?php $n = 1; while($alt = mysqli_fetch_assoc($qGetDataAlternatifLeptop)){ ?>
                         <tr>
-                            <th scope="row"></th>
-                            <td></td>                            
-                            <td></td>
-                            <td></td>                            
+                            <th scope="row"><?= $n ?></th>
+                            <td> <?= $alt['nama_merk'] ?> </td>                            
+                            <td> <?= $alt['jns_produk'] ?> </td>                            
+                            <td> <?= $alt['seri_produk'] ?> </td>    
+                            <td> 
+                                <a href="#" class="btn btn-warning btn-sm" >Hapus</a>
+                                <a href="#" class="btn btn-info btn-sm" >Update</a>
+                            </td>                                    
                         </tr>
+                    <?php } ?>
 
                     </tbody>
                 </table>
 
             </div>
-            <div class="tab-pane fade" id="smartphone" role="tabpanel" aria-labelledby="profile-tab">...</div>            
+            <div class="tab-pane fade" id="smartphone" role="tabpanel" aria-labelledby="profile-tab">
+                
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Merk</th>  
+                            <th scope="col">Jenis Produk</th>
+                            <th scope="col">Seri Produk</th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php $n = 1; while($alt = mysqli_fetch_assoc($qGetDataAlternatifSmartphone)){ ?>
+                        <tr>
+                            <th scope="row"><?= $n ?></th>
+                            <td> <?= $alt['nama_merk'] ?> </td>                            
+                            <td> <?= $alt['jns_produk'] ?> </td>                            
+                            <td> <?= $alt['seri_produk'] ?> </td>    
+                            <td> 
+                                <a href="#" class="btn btn-warning btn-sm" >Hapus</a>
+                                <a href="#" class="btn btn-info btn-sm" >Update</a>
+                            </td>                                    
+                        </tr>
+                    <?php } ?>
+
+                    </tbody>
+                </table>
+
+            </div>            
         </div>
             
         </div>
