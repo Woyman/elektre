@@ -55,7 +55,25 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                     Data berhasil ditambahkan.
                 </div>
 
-        <?php }elseif(isset($_GET['success']) && $_GET['success'] == '2'){ }?>
+        <?php }elseif(isset($_GET['success']) && $_GET['success'] == '2'){ ?>
+
+                <div class="alert alert-success animated fadeOut delay-4s" role="alert">
+                    Data berhasil diupdate.
+                </div>
+
+            <?php }elseif(isset($_GET['success']) && $_GET['success'] == '3'){ ?>
+
+                <div class="alert alert-info animated fadeOut delay-4s" role="alert">
+                    Data berhasil dihapus.
+                </div>
+
+            <?php   }elseif(isset($_GET['error']) && $_GET['error'] == '1'){?>
+
+                <div class="alert alert-danger animated fadeOut delay-4s" role="alert">
+                    ID alternatif tidak ditemukan.
+                </div>
+
+        <?php }?>
 
         <ul class="nav nav-tabs nav-fill col-12" id="myTab" role="tablist">
             <li class="nav-item">
@@ -87,8 +105,9 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                             <td> <?= $alt['jns_produk'] ?> </td>                            
                             <td> <?= $alt['seri_produk'] ?> </td>    
                             <td> 
-                                <a href="#" class="btn btn-warning btn-sm" >Hapus</a>
-                                <a href="#" class="btn btn-info btn-sm" >Update</a>
+                                <a href="proses/alternatif.php?action=delete&id=<?= $alt['id_alternatif'] ?>" class="btn btn-warning btn-sm" >Hapus</a>
+                                <a href="edit/alternatif?id=<?= $alt['id_alternatif'] ?>" class="btn btn-info btn-sm" >Update</a>
+                                <a href="detail/alternatif.php?id=<?= $alt['id_alternatif'] ?>" class="btn btn-primary btn-sm" >View</a>
                             </td>                                    
                         </tr>
                     <?php } ?>
@@ -118,8 +137,9 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                             <td> <?= $alt['jns_produk'] ?> </td>                            
                             <td> <?= $alt['seri_produk'] ?> </td>    
                             <td> 
-                                <a href="#" class="btn btn-warning btn-sm" >Hapus</a>
-                                <a href="#" class="btn btn-info btn-sm" >Update</a>
+                                <a href="proses/alternatif.php?action=delete&id=<?= $alt['id_alternatif'] ?>" class="btn btn-warning btn-sm" >Hapus</a>
+                                <a href="edit/alternatif?id=<?= $alt['id_alternatif'] ?>" class="btn btn-info btn-sm" >Update</a>
+                                <a href="detail/alternatif.php?id=<?= $alt['id_alternatif'] ?>" class="btn btn-primary btn-sm" >View</a>
                             </td>                                    
                         </tr>
                     <?php } ?>
