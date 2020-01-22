@@ -1,6 +1,10 @@
 <?php 
 include('../config/session.php');
 include('../config/function.php');
+include('../config/koneksi.php');
+
+$qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
+
 ?>
 
 <!doctype html>
@@ -12,30 +16,26 @@ include('../config/function.php');
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"> 
 
-    <title>Dashboard</title>
+    <title><?php echo 'Perhitungan '.ucfirst(getURL($_SERVER['REQUEST_URI']))  ?></title>
   </head>
   <body>
     
     <!-- <div class="container"> -->
-    <?php include('navbar.php'); ?>
+
+   <?php include('navbar.php'); ?> 
       
     <div class="container"> 
-       
+        <nav aria-label="breadcrumb" >
+            <ol class="breadcrumb" style="background-color: unset;">
+                <li class="breadcrumb-item active" aria-current="page"><?php echo 'Perhitungan '.ucfirst(getURL($_SERVER['REQUEST_URI']))  ?></li>
+            </ol>
+        </nav>        
 
-        <div class="row justify-content-start">
-            <div class="d-flex col-12 pt-5 pb-5"><img src="../images/logo_wymn.png" class="mx-auto" > </div>
-            <div class="col-12"><h4 class="text-center"> Welcome, your text here.</h4></div>
-        </div>
+        
 
-        <?php
-                    echo "<pre>";
-                    // echo $_SERVER['REQUEST_URI'];
-                    // print_r(getRootFolder($_SERVER['REQUEST_URI']) );
-                    print_r($_SERVER);
-                    
-
-                ?>
+        
 
 
     </div>

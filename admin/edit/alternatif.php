@@ -45,7 +45,7 @@ $alt = mysqli_fetch_assoc($qGetDataAlt);
 
         <div class="row">
             <div class="col-8 offset-2">
-            <h4 class="pb-3">Update Alternatif</h4>
+            <h4 class="pb-3">Update Alternatif  </h4>
                 <form action="../proses/alternatif.php" method="post" enctype="multipart/form-data"> 
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id_alternatif" value="<?= $alt['id_alternatif'] ?>">

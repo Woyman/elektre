@@ -35,7 +35,7 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
     <div class="container"> 
         <nav aria-label="breadcrumb" >
             <ol class="breadcrumb" style="background-color: unset;">
-                <li class="breadcrumb-item active" aria-current="page"><?php echo ucfirst(getURL($_SERVER['REQUEST_URI']))  ?></li>                
+                <li class="breadcrumb-item active" aria-current="page"><?php echo ucfirst(getURL($_SERVER['REQUEST_URI'])); ?></li>                
             </ol>            
         </nav>
 
@@ -89,7 +89,7 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                 <table class="table mt-3">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">#  </th>
                             <th scope="col">Merk</th>  
                             <th scope="col">Jenis Produk</th>
                             <th scope="col">Seri Produk</th>
@@ -110,7 +110,7 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                                 <a href="detail/alternatif.php?id=<?= $alt['id_alternatif'] ?>" class="btn btn-primary btn-sm" >View</a>
                             </td>                                    
                         </tr>
-                    <?php } ?>
+                    <?php $n++;  } ?>
 
                     </tbody>
                 </table>
@@ -142,10 +142,12 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                                 <a href="detail/alternatif.php?id=<?= $alt['id_alternatif'] ?>" class="btn btn-primary btn-sm" >View</a>
                             </td>                                    
                         </tr>
-                    <?php } ?>
+                    <?php $n++; } ?>
 
                     </tbody>
                 </table>
+
+              
 
             </div>            
         </div>

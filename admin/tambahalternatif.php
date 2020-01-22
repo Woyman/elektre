@@ -4,6 +4,7 @@ include('../config/function.php');
 include('../config/koneksi.php');
 
 $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
+$qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
 
 ?>
 
@@ -34,11 +35,11 @@ $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
             </ol>            
         </nav>
 
-
+        <form action="proses/alternatif.php" method="post" enctype="multipart/form-data"> 
         <div class="row">
-            <div class="col-8 offset-2">
+            <div class="col-6">
             <h4 class="pb-3">Masukkan alternatif baru.</h4>
-                <form action="proses/alternatif.php" method="post" enctype="multipart/form-data"> 
+               
                     <input type="hidden" name="action" value="input">
                     <div class="form-group">
                         <label for="merk">Merk</label>
@@ -77,9 +78,15 @@ $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
                     <div class="form-group">
                        <button class="btn btn-primary col-3">Input</button>
                     </div>
-                </form>
-            </div>                
+                
+            </div>   
+            
+            <div class="col-6">
+            <h4 class="pb-3">Masukkan Nilai Kretia.</h4>                                                         
+                
+            </div>
         </div>
+        </form>
 
 
     </div>
