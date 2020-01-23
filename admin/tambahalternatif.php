@@ -3,8 +3,17 @@ include('../config/session.php');
 include('../config/function.php');
 include('../config/koneksi.php');
 
+if($_GET['alternatif'] == 'laptop')
+{
+    $table = 'kriteria_laptop';
+    $title = 'laptop';
+}elseif($_GET['alternatif'] == 'smartphone'){
+    $table = 'kriteria_smartphone';
+    $title = 'smartphone';
+}
+
 $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
-$qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
+$getKriteria = mysqli_query($konek, "SELECT * FROM $table");
 
 ?>
 
@@ -31,7 +40,7 @@ $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
         <nav aria-label="breadcrumb" >
             <ol class="breadcrumb" style="background-color: unset;">
                 <li class="breadcrumb-item" aria-current="page">Alternatif</li>                
-                <li class="breadcrumb-item active" aria-current="page">Tambah Alternatif Baru</li>                
+                <li class="breadcrumb-item active" aria-current="page">Tambah Alternatif Baru <?= ucfirst($title) ?></li>                
             </ol>            
         </nav>
 
@@ -54,9 +63,18 @@ $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
                     <div class="form-group">
                         <label for="jns_produk">Jenis Produk</label>
                         <select class="form-control" name="jns_produk" id="jns_produk" Required> 
-                            <option value=""> --jenis produk </option>
-                            <option value="laptop"> Laptop</option>
-                            <option value="smartphone"> Smartphone</option>
+                            <?php  
+                                if($title == 'laptop'){?>
+
+                                        <option value="laptop" selected> Laptop</option>
+
+                            <?php }else{ ?>
+
+                                        <option value="smartphone" selected> Smartphone</option>
+                            
+                            <?php } ?>                            
+                            
+                            
                         </select>
                     </div>
 
@@ -82,8 +100,20 @@ $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
             </div>   
             
             <div class="col-6">
-            <h4 class="pb-3">Masukkan Nilai Kretia.</h4>                                                         
+            <h4 class="pb-3">Masukkan Nilai Kriteria.</h4>                                                         
                 
+                <?php 
+                    while($k = mysqli_fetch_row($getKriteria)) {
+                ?>
+                    <div class="form-group">
+                    <input type="hidden" name="id_kriteria[]" value="<?= $k[0] ?>">
+                        <label for="k_<?= $k[0] ?>"><?= $k[1] ?></label>
+                        <input type="number" max='5' min='1' name="bobot[]" class="form-control" id="k_<?= $k[0] ?>" Required >                                
+                    </div>
+                <?php 
+                    }
+                ?>
+
             </div>
         </div>
         </form>

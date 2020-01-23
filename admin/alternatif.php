@@ -42,11 +42,7 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
 
         <div class="row">
 
-        <div class="col-12 mb-3">
-            <div class="float-right">
-                <a href="tambahalternatif.php" class="btn btn-primary btn-sm"> Tambah Alternatif Baru </a>
-            </div>
-        </div>
+      
 
         <?php  if( isset($_GET['success']) && $_GET['success'] == '1' )
             { ?>
@@ -85,7 +81,13 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
         </ul>
         <div class="tab-content col-12" id="myTabContent">
             <div class="tab-pane fade show active" id="laptop" role="tabpanel" aria-labelledby="home-tab">
-            
+                
+                <div class="col-12 ">
+                    <div class="float-right">
+                        <a href="tambahalternatif.php?alternatif=laptop" class="btn btn-primary btn-sm my-3"> Tambah Alternatif Baru </a>
+                    </div>
+                </div>
+
                 <table class="table mt-3">
                     <thead>
                         <tr>
@@ -118,6 +120,12 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
             </div>
             <div class="tab-pane fade" id="smartphone" role="tabpanel" aria-labelledby="profile-tab">
                 
+                <div class="col-12 ">
+                    <div class="float-right">
+                        <a href="tambahalternatif.php?alternatif=smartphone" class="btn btn-primary btn-sm my-3"> Tambah Alternatif Baru </a>
+                    </div>
+                </div>
+
                 <table class="table mt-3">
                     <thead>
                         <tr>

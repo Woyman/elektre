@@ -5,9 +5,9 @@ include('../../config/koneksi.php');
 
 if(!isset($_GET['id'])) header('Location: ../alternatif.php?error=1');
 
-
 $idAlternatif = $_GET['id'];
 $q = "SELECT * FROM alternatif WHERE id_alternatif = '$idAlternatif' ";
+
 
 $qGetDataMerk = mysqli_query($konek, "SELECT * FROM merk");
 
@@ -42,11 +42,11 @@ $alt = mysqli_fetch_assoc($qGetDataAlt);
             </ol>            
         </nav>
 
-
+    <form action="../proses/alternatif.php" method="post" enctype="multipart/form-data"> 
         <div class="row">
-            <div class="col-8 offset-2">
+            <div class="col-6">
             <h4 class="pb-3">Update Alternatif  </h4>
-                <form action="../proses/alternatif.php" method="post" enctype="multipart/form-data"> 
+                
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id_alternatif" value="<?= $alt['id_alternatif'] ?>">
                     <div class="form-group">
@@ -93,10 +93,42 @@ $alt = mysqli_fetch_assoc($qGetDataAlt);
                     <div class="form-group">
                        <button class="btn btn-primary col-3">Input</button>
                     </div>
-                </form>
+                
             </div>                
-        </div>
 
+            <div class="col-6">
+            <h4 class="pb-3">Nilai Kriteria.</h4>                                                         
+                
+                <?php 
+                    if($alt['jns_produk'] == 'laptop')
+                    {
+                        $table = 'kriteria_laptop';
+                        $tableNilai = 'nilai_kriteria_laptop';
+                    }else{
+                        $table = 'kriteria_smartphone';
+                        $tableNilai = 'nilai_kriteria_smartphone';
+                    }
+                    
+                    $getKriteria = mysqli_query($konek, "SELECT * FROM $table");
+                    
+                                                       
+                while($k = mysqli_fetch_row($getKriteria)){
+                    $id_kriteria = $k[0];
+                    $qGetNilai = mysqli_query($konek,"SELECT * FROM $tableNilai WHERE id_alternatif='$idAlternatif' AND id_kriteria = '$id_kriteria' ");
+                    $nilai = mysqli_fetch_assoc($qGetNilai);
+                ?>
+                    <div class="form-group">
+                    <input type="hidden" name="id_kriteria[]" value="<?= $k[0] ?>">
+                    <input type="hidden" name="id_nilai[]" value="<?= $nilai['id_nilai'] ?>">
+                        <label for="k_<?= $k[0] ?>"><?= $k[1] ?></label>
+                        <input type="number" max='5' min='1' name="bobot[]" class="form-control" value="<?= $nilai['nilai'] ?>" id="k_<?= $k[0] ?>" Required >                                
+                    </div>
+                <?php 
+                    }
+                ?>
+            </div>
+        </div>
+    </form>
 
     </div>
 
