@@ -1,8 +1,11 @@
 <?php 
+include('../config/koneksi.php');
 include('../config/session.php');
 include('../config/function.php');
-include('../config/koneksi.php');
-
+include('proses/electre.php');
+$electre = new electre;
+$electre->setJenis('laptop');
+$electre->setKonek($konek);
 $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
 
 ?>
@@ -33,9 +36,38 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
             </ol>
         </nav>        
 
-        
+        <?php                               
+          $m_X = $electre->matrixX();      
+        ?>
 
-        
+      <div class="col-6">
+        <div class="card"> 
+          <div class="card-header">
+            Matrix Keputusan (X)
+          </div>
+          <div class="card-body">  
+            <table class="table "> 
+              <tr>
+                <th>Alternatif</th>
+                <?php foreach($m_X['kriteria'] as $kriteria ){ ?>
+                  <th> <?= $kriteria['nama_kriteria']; ?> </th>
+                <?php } ?>
+              </tr>
+
+              <tbody>
+                <?php foreach($m_X['alternatif'] as $alt ){ ?>
+                  <tr>
+                    <td><?= $alt['nama'] ?></td>
+                    <?php foreach($alt['nilai'] as $nilai ){ ?>
+                      <td><?= $nilai ?></td>
+                    <?php } ?>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          <div>
+        </div>
+      <div>
 
 
     </div>

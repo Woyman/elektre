@@ -11,6 +11,18 @@ $q = "SELECT * FROM alternatif JOIN merk ON alternatif.id_merk = merk.id_merk WH
 $qGetDataAlt = mysqli_query($konek, $q);
 $alt = mysqli_fetch_assoc($qGetDataAlt);
 
+$jenis = $alt['jns_produk'];
+
+if($jenis == 'laptop'){ $table='nilai_kriteria_laptop'; $tableK = 'kriteria_laptop'; $id='id_k_laptop'; }
+else{$table='nilai_kriteria_smartphone'; $tableK='kriteria_smartphone'; $id='id_k_smartphone'; }
+
+$qGetAlternatif = "SELECT * FROM $table LEFT JOIN $tableK ON $table.id_kriteria = $tableK.$id  WHERE id_alternatif='$idAlternatif' ";
+$getAlternatif = mysqli_query($konek, $qGetAlternatif);
+
+while($kriterias=mysqli_fetch_assoc($getAlternatif)) {
+    $kriteria[] = $kriterias;
+}
+
 ?>
 
 <!doctype html>
@@ -42,30 +54,51 @@ $alt = mysqli_fetch_assoc($qGetDataAlt);
 
 
         <div class="row">
-            <div class="col-8 offset-2">
-                
-                <img class="card-img-top" src="../input/gambar/<?= $alt['foto'] ?>" style="max-width: 30%;" >
-                    <table class="p-2">
+            <div class="col-6">                
+                <img class="card-img-top" src="../input/gambar/<?= $alt['foto'] ?>" style="max-width: 50%;" >
+                    <table class="p-2 col-12">
                         <tr  style="border-bottom: 1px solid #ebebeb; ">
                             <td class="py-2" style="width: 150px;">Merk</td>
-                            <td><?= $alt['nama_merk'] ?></td>
+                            <td><?= ': '.$alt['nama_merk'] ?></td>
                         </tr>
                         <tr  style="border-bottom: 1px solid #ebebeb; ">
                             <td class="py-2" style="width: 150px;">Jenis Produk</td>
-                            <td><?= ucfirst($alt['jns_produk']) ?></td>
+                            <td><?= ': '.ucfirst($alt['jns_produk']) ?></td>
                         </tr>
                         <tr  style="border-bottom: 1px solid #ebebeb; ">
                             <td class="py-2" style="width: 150px;">Seri Produk</td>
-                            <td><?= ucfirst($alt['seri_produk']) ?></td>
+                            <td><?= ': '.ucfirst($alt['seri_produk']) ?></td>
                         </tr>
                         <tr  style="border-bottom: 1px solid #ebebeb; ">
                             <td class="py-2" style="width: 150px; " valign="top">Detail</td>
-                            <td><?= $alt['deskripsi'] ?></td>
+                            <td><?php echo ': '.htmlspecialchars_decode($alt['deskripsi']); ?></td>
                         </tr>
                         
                     </table>
 
-            </div>                
+            </div>   
+
+            <div class="col-6">
+                <h5>Nilai Kriteria</h5>
+                <table class="table">                        
+                    <tr>                                                    
+                        <?php  
+                            foreach($kriteria as $index => $k){                           
+                                echo '<th> '.$k['nama_kriteria'].'<th>'; 
+                            }
+                        ?>
+                    </tr>
+                    <tr>
+                        <?php  
+                            foreach($kriteria as $index => $k){                           
+                                echo '<td> '.$k['nilai'].'<td>'; 
+                            }
+                        ?>                                                        
+                    </tr>
+
+                </table>
+
+            </div>             
         </div>
 
 
