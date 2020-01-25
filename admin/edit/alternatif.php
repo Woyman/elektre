@@ -110,8 +110,7 @@ $alt = mysqli_fetch_assoc($qGetDataAlt);
                     }
                     
                     $getKriteria = mysqli_query($konek, "SELECT * FROM $table");
-                    
-                                                       
+                                                                           
                 while($k = mysqli_fetch_row($getKriteria)){
                     $id_kriteria = $k[0];
                     $qGetNilai = mysqli_query($konek,"SELECT * FROM $tableNilai WHERE id_alternatif='$idAlternatif' AND id_kriteria = '$id_kriteria' ");

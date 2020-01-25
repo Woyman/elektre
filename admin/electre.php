@@ -3,10 +3,10 @@ include('../config/koneksi.php');
 include('../config/session.php');
 include('../config/function.php');
 include('proses/electre.php');
-$electre = new electre;
-$electre->setJenis('laptop');
-$electre->setKonek($konek);
+
 $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
+
+
 
 ?>
 
@@ -36,40 +36,143 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
             </ol>
         </nav>        
 
-        <?php                               
-          $m_X = $electre->matrixX();      
-        ?>
-
-      <div class="col-6">
-        <div class="card"> 
-          <div class="card-header">
-            Matrix Keputusan (X)
-          </div>
-          <div class="card-body">  
-            <table class="table "> 
-              <tr>
-                <th>Alternatif</th>
-                <?php foreach($m_X['kriteria'] as $kriteria ){ ?>
-                  <th> <?= $kriteria['nama_kriteria']; ?> </th>
-                <?php } ?>
-              </tr>
-
-              <tbody>
-                <?php foreach($m_X['alternatif'] as $alt ){ ?>
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Laptop</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Smartphone</a>
+          </li>        
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <?php 
+              $electre = new electre;
+              $electre->setKonek($konek);
+              $electre->setJenis('laptop');
+              $m_X = $electre->matrixX();      
+              $Allkriteria = $electre->getAllNameKriteria();
+            ?>
+            <div class="row">
+              <div class="col-6 mt-3"> 
+              <h4>Matriks Keputusan</h4>                                                                             
+                <table class="table  mt-3"> 
                   <tr>
-                    <td><?= $alt['nama'] ?></td>
-                    <?php foreach($alt['nilai'] as $nilai ){ ?>
-                      <td><?= $nilai ?></td>
+                    <th>Alternatif</th>
+                    <?php foreach($m_X['kriteria'] as $kriteria ){ ?>
+                      <th> <?= $kriteria['nama_kriteria']; ?> </th>
                     <?php } ?>
                   </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-          <div>
+
+                  <tbody>
+                    <?php foreach($m_X['alternatif'] as $alt ){ ?>
+                      <tr>
+                        <td><?= $alt['nama'] ?></td>
+                        <?php foreach($alt['nilai'] as $nilai ){ ?>
+                          <td><?= $nilai ?></td>
+                        <?php } ?>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-6 mt-3">
+                  <h4>Nilai Bobot</h4>     
+                  <p>Masukkan nilai bobot tiap kriteria untuk perhitungan electre</p>
+                  <form action="hitung_electre.php" method="post">
+                    <input type="hidden" value="laptop" name="jenis" >
+                    <?php  
+                      foreach($Allkriteria as $kri )
+                      {
+                    ?>
+                      <div class="form-group">
+                        <label for="idK<?= $kri['id_k_laptop'] ?>"><?= $kri['nama_kriteria'] ?></label>
+                          <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_laptop'] ?>" >                          
+                          <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_laptop'] ?>" class="form-control">  
+                      </div>
+                    <?php 
+                      }
+                    ?>
+
+                      <div class="form-group">
+                        <button class="btn btn-primary">Hitung</button>
+                      </div>
+                  </form>
+                  <pre>
+                  
+              </div>
+            </div>
+                                  
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+            <?php 
+              $smartphone = new electre;
+              $smartphone->setKonek($konek);
+              $smartphone->setJenis('smartphone');
+              $m_XSmarphone = $smartphone->matrixX();      
+              $Allkriteria = $smartphone->getAllNameKriteria();
+            ?>
+            <div class="row">
+              <div class="col-6 mt-3"> 
+              <h4>Matriks Keputusan</h4>                                                                             
+                <table class="table  mt-3"> 
+                  <tr>
+                    <th>Alternatif</th>
+                    <?php foreach($m_XSmarphone['kriteria'] as $kSmar ){ ?>
+                      <th> <?= $kSmar['nama_kriteria']; ?> </th>
+                    <?php } ?>
+                  </tr>
+
+                  <tbody>
+                    <?php foreach($m_XSmarphone['alternatif'] as $altHp ){ ?>
+                      <tr>
+                        <td><?= $altHp['nama'] ?></td>
+                        <?php foreach($altHp['nilai'] as $nilai ){ ?>
+                          <td><?= $nilai ?></td>
+                        <?php } ?>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-6 mt-3">
+                  <h4>Nilai Bobot</h4>     
+                  <p>Masukkan nilai bobot tiap kriteria untuk perhitungan electre</p>
+                  <form action="#" method="post">
+                    <input type="hidden" value="laptop" name="jenis" >
+                    <?php  
+                      foreach($Allkriteria as $kri )
+                      {
+                    ?>
+                      <div class="form-group">
+                        <label for="idK<?= $kri['id_k_smartphone'] ?>"><?= $kri['nama_kriteria'] ?></label>
+                          <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_smartphone'] ?>" >                          
+                          <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_smartphone'] ?>" class="form-control">  
+                      </div>
+                    <?php 
+                      }
+                    ?>
+
+                      <div class="form-group">
+                        <button class="btn btn-primary">Hitung</button>
+                      </div>
+                  </form>
+                  <pre>
+                  
+              </div>
+            </div>        
+            
+
+          </div>          
         </div>
-      <div>
-
-
+      
+      
+               
+                
+            
+                  
+        </div>
     </div>
 
 
