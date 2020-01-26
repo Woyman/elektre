@@ -211,19 +211,149 @@ class electre
                     {                           
                         $ar['nilaiCD'] = $ar['nilaiCD'] + $m_v['bobot'][$cd];
                     }
-                }else{  
-                    $ar['nilaiCD'] = "--";                        
                 }
             }
         }
 
-        // discordance
+        // discordance        
+        foreach($arr_baru as $indArr => &$arr )
+        {
+            foreach($arr as $iAr => &$ar)
+            {
+                if(is_array($ar))
+                {   
+                    $array_atas = array();
+                    
+                    foreach($ar['dd'] as $indexDd => &$dd )
+                    {
+                        $array_atas[] = abs($m_v['alternatif'][$indArr]['nilai'][$dd] - $m_v['alternatif'][$iAr]['nilai'][$dd]);
+                    }
+                    // print_r($array_atas);
+                    
+                    $array_bawah = array();
+                                             
+                    foreach($alternatif[$indArr]['nilai'] as $iAltNilai => &$value )
+                    {
+                        array_push($array_bawah, abs($value[$iAltNilai] - $alternatif[$iAr]['nilai'][$iAltNilai])  );
+                    }                                               
+                    // print_r($array_bawah);
 
-        echo "<pre>";
-        print_r($arr_baru);
+                    if(empty($array_atas))  $array_atas = array(0);
+                    if(empty($array_bawah))  $array_bawah = array(0);
+
+                    $ar['nilaiDD'] = round(max($array_atas) / max($array_bawah), 4);
+                    unset($array_atas); unset($array_bawah);
+                }
+            }
+        }
+
+        return $arr_baru;
+    }
+
+    function dominan_CDDD($CD_DD, $alternatif)
+    {
+        $cd_dd = $CD_DD;  
+        $jmlAlt = count($alternatif);
+        $totalCD = 0;
+        $totalDD = 0;
+        // threshold concordance dan diconcordance
+        foreach($cd_dd as $index => $row )
+        {
+            foreach($row as $indexRow => $klom )
+            {
+                $totalCD = $totalCD+$klom['nilaiCD'];
+                $totalDD = $totalDD+$klom['nilaiDD'];
+            }
+        }
+
+        $thresholdCD = round($totalCD/($jmlAlt*($jmlAlt-1)), 4) ;
+        // echo "<br>";
+        $thresholdDD = round($totalDD/($jmlAlt*($jmlAlt-1)), 4) ;
+
+        $arr_dominanCD = array();
+        $arr_dominanDD = array();
+        foreach($cd_dd as $index => $row )
+        {
+            foreach($row as $indexRow => $klom )
+            {
+               if($klom['nilaiCD'] > $thresholdCD ){ $banding = 1; }else{ $banding = 0; }
+               $arr_dominanCD[$index][$indexRow] = $banding;
+
+               if($klom['nilaiDD'] < $thresholdDD ){ $banding = 1; }else{ $banding = 0; }
+               $arr_dominanDD[$index][$indexRow] = $banding;
+            }
+        }
+
+        $m_dominan['cd'] = $arr_dominanCD;
+        $m_dominan['thresholdCD'] = $thresholdCD;
+        $m_dominan['dd'] = $arr_dominanDD;
+        $m_dominan['thresholdDD'] = $thresholdDD;
         
+        return $m_dominan;
+    }
 
+    function aggregateDominan($dominan)
+    {
+        $dominan_CD = $dominan['cd'];
+        $dominan_DD = $dominan['dd'];
+        $aggregate = array();
+
+        foreach($dominan_CD as $key => &$row )
+        {
+            foreach($row as $index => &$value )
+            {
+                if($index == $key)
+                {
+                    $aggregate[$key][$index] = '--';
+                }else{
+                    $aggregate[$key][$index] = $value*$dominan_DD[$key][$index];
+                }                                            
+            }
+
+            $hitungValues = array_count_values($aggregate[$key]);
+
+            if(!isset($hitungValues['1']) || $hitungValues['1'] == '' ) $hitungValues['1'] = 0;
+
+            $aggregate[$key]['jml'] = $hitungValues['1'];
+        }
+
+        return $aggregate;
 
     }
+
+    function ranking($aggregate)
+    {
+        // echo "<pre>";
+        
+        $alter = $this->getAllNameAlternatif();
+        $dataSort = array();
+        // print_r($alter);
+        
+        foreach($aggregate as $index => &$ag )
+        {            
+            $dataSort[$index]['jml'] = $ag['jml'];
+            $dataSort[$index]['index'] = $index;
+            $aggregate[$index]['nama_alternatif'] = $alter[$index]['nama'];
+        }        
+        // print_r($aggregate);
+        array_multisort($dataSort, SORT_ASC);
+        $jml = count($dataSort)-1;
+
+        $rank = array();
+        
+        for($a = $jml; $a >= 0; $a--)
+        {            
+            $index = $jml - $a;
+            $res[$index] = $dataSort[$a];                        
+        }
+
+        foreach($res as $index => &$a )
+        {
+            $rank[$index] = $aggregate[$a['index']];                         
+        }
+      
+        return $rank;
+    }
+
 }
 ?>

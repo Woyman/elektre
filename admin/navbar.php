@@ -30,6 +30,9 @@
               <li class="nav-item <?php echo (getURL($_SERVER['REQUEST_URI']) == 'electre' )? 'active': '';  ?> ">
                 <a class="nav-link" href="<?= base_url(); ?>electre.php">Perhitungan </a>
               </li>
+              <li class="nav-item <?php echo (getURL($_SERVER['REQUEST_URI']) == 'electre' )? 'active': '';  ?> ">
+                <a class="nav-link" href="<?= base_url(); ?>logout.php">Logout </a>
+              </li>
             </ul>
           </div>
         </div>

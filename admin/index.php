@@ -27,16 +27,7 @@ include('../config/function.php');
             <div class="d-flex col-12 pt-5 pb-5"><img src="../images/logo_wymn.png" class="mx-auto" > </div>
             <div class="col-12"><h4 class="text-center"> Welcome, your text here.</h4></div>
         </div>
-
-        <?php
-                    echo "<pre>";
-                    // echo $_SERVER['REQUEST_URI'];
-                    // print_r(getRootFolder($_SERVER['REQUEST_URI']) );
-                    print_r($_SERVER);
-                    
-
-                ?>
-
+      
 
     </div>
 

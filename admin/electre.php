@@ -87,7 +87,7 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
                     ?>
                       <div class="form-group">
                         <label for="idK<?= $kri['id_k_laptop'] ?>"><?= $kri['nama_kriteria'] ?></label>
-                          <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_laptop'] ?>" >                          
+                          <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_laptop'] ?>" required>                          
                           <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_laptop'] ?>" class="form-control">  
                       </div>
                     <?php 
@@ -139,15 +139,15 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
               <div class="col-6 mt-3">
                   <h4>Nilai Bobot</h4>     
                   <p>Masukkan nilai bobot tiap kriteria untuk perhitungan electre</p>
-                  <form action="#" method="post">
-                    <input type="hidden" value="laptop" name="jenis" >
+                  <form action="hitung_electre.php" method="post">
+                    <input type="hidden" value="smartphone" name="jenis" >
                     <?php  
                       foreach($Allkriteria as $kri )
                       {
                     ?>
                       <div class="form-group">
                         <label for="idK<?= $kri['id_k_smartphone'] ?>"><?= $kri['nama_kriteria'] ?></label>
-                          <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_smartphone'] ?>" >                          
+                          <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_smartphone'] ?>" required>                          
                           <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_smartphone'] ?>" class="form-control">  
                       </div>
                     <?php 
