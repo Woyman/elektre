@@ -18,7 +18,7 @@ $kriterias = $m_X['kriteria'];
 $alternatifs = $electre->getAllNameAlternatif();
 $bobots = $_POST['nilaiKriteria'];
     // echo "<pre>";
-    // print_r($rank);
+    // print_r($CD_DD);
     
 
 ?>

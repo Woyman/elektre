@@ -184,7 +184,7 @@ class electre
                         $nilaiAlt = $alt['nilai'][$a];
                         $nilaiI = $alternatif[$i]['nilai'][$a];
 
-                        if($nilaiAlt > $nilaiI ){
+                        if($nilaiAlt >= $nilaiI ){
                             $cd[] = $a;
                         }else{
                             $dd[] = $a;
@@ -216,6 +216,8 @@ class electre
         }
 
         // discordance        
+        // echo "<pre>";
+        // print_r($alternatif);
         foreach($arr_baru as $indArr => &$arr )
         {
             foreach($arr as $iAr => &$ar)
@@ -233,8 +235,8 @@ class electre
                     $array_bawah = array();
                                              
                     foreach($alternatif[$indArr]['nilai'] as $iAltNilai => &$value )
-                    {
-                        array_push($array_bawah, abs($value[$iAltNilai] - $alternatif[$iAr]['nilai'][$iAltNilai])  );
+                    {                        
+                        array_push($array_bawah, abs($alternatif[$indArr]['nilai'][$iAltNilai] - $alternatif[$iAr]['nilai'][$iAltNilai])  );
                     }                                               
                     // print_r($array_bawah);
 
@@ -273,15 +275,35 @@ class electre
         $arr_dominanCD = array();
         $arr_dominanDD = array();
         foreach($cd_dd as $index => $row )
-        {
+        {            
             foreach($row as $indexRow => $klom )
             {
-               if($klom['nilaiCD'] > $thresholdCD ){ $banding = 1; }else{ $banding = 0; }
-               $arr_dominanCD[$index][$indexRow] = $banding;
-
-               if($klom['nilaiDD'] < $thresholdDD ){ $banding = 1; }else{ $banding = 0; }
-               $arr_dominanDD[$index][$indexRow] = $banding;
+                if(is_array($klom))
+                {
+                    if($klom['nilaiCD'] != 0 )
+                    {
+                        if($klom['nilaiCD'] >= $thresholdCD ){ $bandingCD = 1; }else{ $bandingCD = 0; }
+                    }else{
+                        $bandingCD = 0;
+                    }
+                    
+                    
+                    
+                        
+                    if($klom['nilaiDD'] != 0 )
+                    {
+                        if($klom['nilaiDD'] < $thresholdDD ){ $bandingDD = 1; }else{ $bandingDD = 0; }
+                    }else{
+                        $bandingDD = 0;
+                    }                                        
+                }else{
+                    $bandingCD = 0;
+                    $bandingDD = 0;
+                }
+                $arr_dominanCD[$index][$indexRow] = $bandingCD;
+                $arr_dominanDD[$index][$indexRow] = $bandingDD;
             }
+            
         }
 
         $m_dominan['cd'] = $arr_dominanCD;

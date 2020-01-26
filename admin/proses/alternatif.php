@@ -56,10 +56,6 @@ elseif(isset($_POST['action']) && $_POST['action'] == 'update')
     $qGetAlternatif = mysqli_query($konek,"SELECT * FROM alternatif WHERE id_alternatif='$idAlternatif' ");
     $alt = mysqli_fetch_assoc($qGetAlternatif);
 
-    // echo "<pre>";
-    // print_r($_FILES);
-
-
     if(!empty($_FILES['gambar']['name']))
     {
         $foto = $_FILES['gambar']['name'];
@@ -80,8 +76,21 @@ elseif(isset($_POST['action']) && $_POST['action'] == 'update')
 
     foreach($id_nilai as $index=>$id )    
     {   $nilai = $bobot[$index];
-        $qInsertNilai =  "UPDATE $table SET nilai='$nilai' WHERE id_nilai = '$id' ";
-        mysqli_query($konek, $qInsertNilai);
+
+        $cekIdNilai = "SELECT * FROM $table where id_nilai='$id' ";
+        $qCek = mysqli_query($konek, $cekIdNilai); $cek = mysqli_num_rows($qCek);
+
+        if($cek > 0 )
+        {
+            $qInsertNilai =  "UPDATE $table SET nilai='$nilai' WHERE id_nilai = '$id' ";
+            mysqli_query($konek, $qInsertNilai);
+        }else{
+            $idKriteria = $_POST['id_kriteria'][$index];
+            echo $qInsertNilai =  "INSERT $table (nilai, id_kriteria, id_alternatif) VALUES('$nilai','$idKriteria','$idAlternatif') ";
+            mysqli_query($konek, $qInsertNilai);
+        }
+
+      
     }
 
     if($insert) 
