@@ -68,7 +68,7 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_laptop");
                                 <th scope="row"><?php echo $no; ?></th>
                                 <td><?php echo $kriteria['nama_kriteria'] ?></td>                            
                                 <td> 
-                                    <a href="proses/kriteria.php?action=delete&jenis=laptop&id=<?php echo $kriteria['id_k_laptop'] ?>" class="btn btn-warning btn-sm"> Hapus </a>
+                                    <a href="#" data-id="<?php echo $kriteria['id_k_laptop'] ?>" class="btn btn-warning btn-sm delete"> Hapus </a>
                                 </td>
                             </tr>
 
@@ -112,6 +112,25 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_laptop");
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script>
+
+$( document ).ready(function() {
+    
+    $('.delete').click(function(){
+
+      if(confirm('Anda yakin ingin menghapus kriteria ini?'))
+      {
+          var id = $(this).attr('data-id');
+        //   alert(id);
+          window.location = "proses/kriteria.php?action=delete&jenis=laptop&id="+id;
+      }
+
+    });
+
+});
+
+    </script>
 
   </body>
 </html>

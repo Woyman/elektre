@@ -1,8 +1,8 @@
 <?php 
-include('../config/koneksi.php');
-include('../config/session.php');
-include('../config/function.php');
-include('proses/electre.php');
+include('config/koneksi.php');
+
+include('config/function.php');
+include('admin/proses/electre.php');
 
 $electre = new electre;
 $electre->setKonek($konek);
@@ -19,8 +19,6 @@ $alternatifs = $electre->getAllNameAlternatif();
 $bobots = $_POST['nilaiKriteria'];
     // echo "<pre>";
     // print_r($CD_DD);
-    
-
 ?>
 
 

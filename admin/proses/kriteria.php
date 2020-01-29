@@ -25,19 +25,22 @@ if(isset($_POST['action']) && $_POST['action'] == 'input' )
 }
 elseif(isset($_GET['action']) && $_GET['action'] == 'delete')
 {
-    $id_merk = $_GET['id'];
+    $kriteria = $_GET['id'];
 
     if($_GET['jenis'] == 'laptop' )
     {
-        $table = 'kriteria_smartphone';
-        $header = 'Location: ../smartphone.php?success=1';
+        $table = 'kriteria_laptop';
+        $header = 'Location: ../laptop.php?success=2';
+        $id_table = "id_k_laptop";
     }else{
-
+        $table = 'kriteria_smartphone';
+        $header = 'Location: ../smartphone.php?success=2';
+        $id_table = "id_k_smartphone";
     }
+    $q = "DELETE FROM $table WHERE $id_table='$kriteria' ";
+    $deleteMerk = mysqli_query($konek, $q);
 
-    $deleteMerk = mysqli_query($konek, "DELETE FROM merk WHERE id_merk='$id_merk' ");
-
-    header("Location: ../merk.php?success=2");  
+    header($header);  
 }
 
 ?>

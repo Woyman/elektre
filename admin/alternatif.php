@@ -107,7 +107,7 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                             <td> <?= $alt['jns_produk'] ?> </td>                            
                             <td> <?= $alt['seri_produk'] ?> </td>    
                             <td> 
-                                <a href="proses/alternatif.php?action=delete&id=<?= $alt['id_alternatif'] ?>" class="btn btn-warning btn-sm" >Hapus</a>
+                                <a href="#" class="btn btn-warning btn-sm delete"  data-id='<?= $alt['id_alternatif'] ?>'>Hapus</a>
                                 <a href="edit/alternatif?id=<?= $alt['id_alternatif'] ?>" class="btn btn-info btn-sm" >Update</a>
                                 <a href="detail/alternatif.php?id=<?= $alt['id_alternatif'] ?>" class="btn btn-primary btn-sm" >View</a>
                             </td>                                    
@@ -145,7 +145,7 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
                             <td> <?= $alt['jns_produk'] ?> </td>                            
                             <td> <?= $alt['seri_produk'] ?> </td>    
                             <td> 
-                                <a href="proses/alternatif.php?action=delete&id=<?= $alt['id_alternatif'] ?>" class="btn btn-warning btn-sm" >Hapus</a>
+                                <a href="#" class="btn btn-warning btn-sm delete" data-id='<?= $alt['id_alternatif'] ?>' >Hapus</a>
                                 <a href="edit/alternatif?id=<?= $alt['id_alternatif'] ?>" class="btn btn-info btn-sm" >Update</a>
                                 <a href="detail/alternatif.php?id=<?= $alt['id_alternatif'] ?>" class="btn btn-primary btn-sm" >View</a>
                             </td>                                    
@@ -171,6 +171,22 @@ $qGetDataAlternatifSmartphone = mysqli_query($konek, "SELECT * FROM alternatif
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
 
+$( document ).ready(function() {
+    
+    $('.delete').click(function(){
+
+      if(confirm('Anda yakin ingin menghapus alternatif ini?'))
+      {
+          var id = $(this).attr('data-id');
+          window.location = "proses/alternatif.php?action=delete&id="+id;
+      }
+
+    });
+
+});
+
+    </script>
   </body>
 </html>
