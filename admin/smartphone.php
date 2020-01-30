@@ -121,8 +121,8 @@ $( document ).ready(function() {
       if(confirm('Anda yakin ingin menghapus kriteria ini?'))
       {
           var id = $(this).attr('data-id');
-          alert(id);
-        //   window.location = "proses/kriteria.php?action=delete&jenis=smartphone&id="+id;
+        //   alert(id);
+         window.location = "proses/kriteria.php?action=delete&jenis=smartphone&id="+id;
       }
 
     });

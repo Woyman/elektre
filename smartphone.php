@@ -43,7 +43,7 @@ include('config/koneksi.php');
                             <img class="card-img-top" src="admin/input/gambar/<?= $laptop['foto'] ?>" alt="Card image cap">
                             <div class="card-body">
                             <h5 class="card-title"><?= $laptop['nama_merk'].' '.$laptop['seri_produk'] ?></h5>                        
-                            <a href="detail.php?j=laptop&id=<?= $laptop['id_alternatif'] ?>" class="btn btn-primary">Lihat</a>
+                            <a href="detail.php?j=smartphone&id=<?= $laptop['id_alternatif'] ?>" class="btn btn-primary">Lihat</a>
                             </div>
                         </div>
                     </div>

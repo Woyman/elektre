@@ -67,7 +67,7 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
                       <div class="form-group">
                         <label for="idK<?= $kri['id_k_laptop'] ?>"><?= $kri['nama_kriteria'] ?></label>
                           <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_laptop'] ?>" required>                          
-                          <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_laptop'] ?>" class="form-control">  
+                          <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_laptop'] ?>" class="form-control" required>  
                       </div>
                     <?php 
                       }
@@ -106,7 +106,7 @@ $qGetDataKriteria = mysqli_query($konek, "SELECT * FROM kriteria_smartphone");
                       <div class="form-group">
                         <label for="idK<?= $kri['id_k_smartphone'] ?>"><?= $kri['nama_kriteria'] ?></label>
                           <input type="hidden" name="id_kriteria[]" value="<?= $kri['id_k_smartphone'] ?>" required>                          
-                          <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_smartphone'] ?>" class="form-control">  
+                          <input type="number" min='1' max='5' name="nilaiKriteria[]" id="idK<?= $kri['id_k_smartphone'] ?>" class="form-control" required>  
                       </div>
                     <?php 
                       }
